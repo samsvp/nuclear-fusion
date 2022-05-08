@@ -25,6 +25,7 @@ nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size)
 
     this->rect.setTexture(&this->texture);
     this->rect.setSize(brush_size);
+    this->setColor(0, 0, 0, 8);
 }
 
 nf::Brush::~Brush() { }
