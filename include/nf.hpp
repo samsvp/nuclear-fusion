@@ -51,7 +51,7 @@ struct Vec2
      * @param is_degree defines if the angle is in degrees or radians
      * @return Vec2 
      */
-    Vec2 rotate(float angle, bool is_degree=0);
+    Vec2 rotate(float angle, bool is_degree=0) const;
     /**
      * @brief Rotates the vector around a point
      * 
@@ -60,8 +60,9 @@ struct Vec2
      * @param is_degree defines if the angle is in degrees or radians
      * @return Vec2 
      */
-    Vec2 rotate(float angle, const Vec2& center, bool is_degree=0);
-
+    Vec2 rotate(float angle, const Vec2& center, bool is_degree=0) const;
+    static Vec2 rotate(const Vec2& v, float angle, bool is_degree=0);
+    static Vec2 rotate(const Vec2& v, float angle, const Vec2& center, bool is_degree=0);
 
     Vec2 operator+(const Vec2& other) const;
     Vec2 operator-(const Vec2& other) const;

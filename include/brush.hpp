@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nf.hpp"
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 
@@ -32,6 +33,13 @@ public:
     void setColor(sf::Color color);
     void setColor(uint8_t r, uint8_t g, uint8_t b);
     void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+    /**
+     * @brief Set the palette object
+     * 
+     * @param palette 
+     */
+    void set_palette(const std::vector<sf::Color> palette);
+    void set_palette(const std::vector<std::vector<uint8_t>> palette);
 
     void draw_line(nf::Window* window, float x1, float y1, float x2, float y2, float step=0.01);
     void draw_rect(nf::Window* window, float x, float y, float w, float h, float step=0.01);
@@ -48,9 +56,10 @@ public:
      * @param args points of the bezier curve
      */
     template<typename... Args>
-    void draw_bezier(nf::Window* window, float step, Args... args);
+    void draw_bezier(nf::Window* window, float step, Args... points);
 
 private:
+    std::vector<sf::Color> palette;
     nf::Random random;
     sf::Texture texture;
     sf::RectangleShape rect;

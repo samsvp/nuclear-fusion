@@ -33,18 +33,57 @@ nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size) :
 nf::Brush::~Brush() { }
 
 
-void nf::Brush::setColor(sf::Color color) { this->rect.setFillColor(color); }
-void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b) { this->rect.setFillColor({r, g, b}); }
-void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) { this->rect.setFillColor({r, g, b, a}); }
+void nf::Brush::setColor(sf::Color color) 
+{
+    if (this->palette.size() == 0) 
+    {
+        this->rect.setFillColor(color);
+        return;
+    }
+    auto calc_dist = [](sf::Color c1, sf::Color c2){
+        return std::abs((int)c1.r - (int)c2.r) + 
+            std::abs((int)c1.g - (int)c2.g) +
+            std::abs((int)c1.b - (int)c2.b);
+    };
+    
+    int min_dist = 1000000;
+    sf::Color r_color;
+    for (const auto& p: palette)
+    {
+        int dist = calc_dist(p, color);
+        if (dist < min_dist)
+        {
+            min_dist = dist;
+            r_color = p;
+        }
+    }
+    this->rect.setFillColor({r_color.r, r_color.g, r_color.b, color.a});
+}
+void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b) 
+{ return this->setColor({r, g, b}); }
+void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) 
+{ return this->setColor({r, g, b, a}); }
+
+void nf::Brush::set_palette(const std::vector<sf::Color> palette) { this->palette = palette; }
+void nf::Brush::set_palette(const std::vector<std::vector<uint8_t>> palette) 
+{
+    this->palette.clear();
+    for (auto& p: palette)
+    {
+        p.size() == 3 ? 
+            this->palette.push_back({p[0], p[1], p[2]}):
+            this->palette.push_back({p[0], p[1], p[2], p[3]});
+    }
+}
 
 
 template<typename... Args>
-void nf::Brush::draw_bezier(nf::Window* window, float step, Args... args)
+void nf::Brush::draw_bezier(nf::Window* window, float step, Args... points)
 {
     float t = 0;
     while (t < 1)
     {
-        nf::Vec2 v = nf::bezier(args..., t);
+        nf::Vec2 v = nf::bezier(points..., t);
         
         this->setPosition({v.x, v.y});
 

@@ -17,7 +17,7 @@ float nf::Random::gen() { return dist(rng); }
 nf::Vec2::Vec2() : x(0), y(0) { }
 nf::Vec2::Vec2(float x, float y) : x(x), y(y) { }
 
-nf::Vec2 nf::Vec2::rotate(float angle, bool is_degree)
+nf::Vec2 nf::Vec2::rotate(float angle, bool is_degree) const
 {
     if (!is_degree) angle = angle * 180 / M_PI;
 
@@ -26,8 +26,7 @@ nf::Vec2 nf::Vec2::rotate(float angle, bool is_degree)
     );
 }
 
-
-nf::Vec2 nf::Vec2::rotate(float angle, const nf::Vec2& center, bool is_degree)
+nf::Vec2 nf::Vec2::rotate(float angle, const nf::Vec2& center, bool is_degree) const
 {
     if (is_degree) angle = angle * M_PI / 180;
 
@@ -37,6 +36,10 @@ nf::Vec2 nf::Vec2::rotate(float angle, const nf::Vec2& center, bool is_degree)
                     center.y + std::sin(angle) * c.x + std::cos(angle) * c.y
     );
 }
+nf::Vec2 nf::Vec2::rotate(const Vec2& v, float angle, bool is_degree)
+{ return v.rotate(angle, is_degree); }
+nf::Vec2 nf::Vec2::rotate(const Vec2& v, float angle, const nf::Vec2& center, bool is_degree)
+{ return v.rotate(angle, center, is_degree); }
 
 
 nf::Vec2 nf::Vec2::operator+(const nf::Vec2& other) const
