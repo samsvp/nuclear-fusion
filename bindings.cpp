@@ -10,7 +10,7 @@ using namespace pybind11::literals;
 
 PYBIND11_MODULE(nuclear_fusion, m) {
     py::class_<nf::Window>(m, "Window")
-        .def(py::init<>())
+        .def(py::init<int, int>())
         .def("resize", &nf::Window::resize)
         .def("main", &nf::Window::main)
         .def("set_brush", &nf::Window::set_brush);

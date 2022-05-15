@@ -10,8 +10,11 @@ namespace nf
 struct Window
 {
     Window();
+    Window(int size_x, int size_y);
     ~Window();
 
+    // window sizes
+    int size_x, size_y;
     // defines whether the window can be drawn
     bool should_draw;
     // the brush to be used to draw in the window
