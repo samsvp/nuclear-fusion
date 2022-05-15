@@ -11,6 +11,10 @@ namespace nf
 class Window;
 
 
+/**
+ * @brief Painting brush class
+ * 
+ */
 class Brush : public sf::Drawable, public sf::Transformable
 {
 public:
@@ -20,6 +24,11 @@ public:
     ~Brush();
 
 
+    /**
+     * @brief Set the Color object
+     * 
+     * @param color 
+     */
     void setColor(sf::Color color);
     void setColor(uint8_t r, uint8_t g, uint8_t b);
     void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
@@ -30,6 +39,14 @@ public:
     void draw_ellipse(nf::Window* window, float x, float y, float r1, float r2, float step=0.01);
     void draw_path(nf::Window* window, std::vector<nf::Vec2> points, float step=0.01, int n_cps=1);
 
+    /**
+     * @brief Draws a bezier curve with the given points
+     * 
+     * @tparam Args 
+     * @param window the window to draw to
+     * @param step steps to take from each draw
+     * @param args points of the bezier curve
+     */
     template<typename... Args>
     void draw_bezier(nf::Window* window, float step, Args... args);
 
