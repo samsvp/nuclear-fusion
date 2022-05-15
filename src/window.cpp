@@ -1,7 +1,14 @@
 #include "../include/window.hpp"
 
 
-nf::Window::Window() : window_thread(&Window::main, this), should_draw(0)
+nf::Window::Window() : window_thread(&Window::main, this), 
+        should_draw(0), size_x(800), size_y(600)
+{
+    this->window_thread.launch();
+}
+
+nf::Window::Window(int size_x, int size_y) : window_thread(&Window::main, this), 
+        should_draw(0), size_x(size_x), size_y(size_y)
 {
     this->window_thread.launch();
 }
@@ -15,10 +22,10 @@ nf::Window::~Window()
 
 void nf::Window::main()
 {
-    this->canvas.create(800, 600);
+    this->canvas.create(this->size_x, this->size_y);
     this->canvas.clear(sf::Color::White);
 
-    this->window.create(sf::VideoMode(800, 600), L"s", sf::Style::Default);
+    this->window.create(sf::VideoMode(this->size_x, this->size_y), L"Window", sf::Style::Default);
 
     sf::Sprite sprite;
     sprite.setTexture(this->canvas.getTexture(), true);
