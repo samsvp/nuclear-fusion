@@ -5,6 +5,7 @@
 
 #include "../include/nf.hpp"
 #include "../include/window.hpp"
+#include "../include/brush.hpp"
 
 
 using std::this_thread::sleep_for;
@@ -15,7 +16,8 @@ nf::Brush::Brush(const char* texture_path, float brush_size_x, float brush_size_
         Brush(texture_path, sf::Vector2f{brush_size_x, brush_size_y})
 {}
 
-nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size) 
+nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size) : 
+        random(1.0, 1.0f)
 {
     if (!this->texture.loadFromFile(texture_path))
     {
@@ -46,7 +48,7 @@ void nf::Brush::draw_bezier(nf::Window* window, float step, Args... args)
         
         this->setPosition({v.x, v.y});
 
-        t += step;
+        t += step * random.gen();
 
         window->should_draw = true;
 

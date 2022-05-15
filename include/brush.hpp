@@ -1,13 +1,14 @@
 #pragma once
 
+#include "nf.hpp"
 #include <SFML/Graphics.hpp>
 
 
 namespace nf
 {
 
+
 class Window;
-class Vec2;
 
 
 class Brush : public sf::Drawable, public sf::Transformable
@@ -33,6 +34,7 @@ public:
     void draw_bezier(nf::Window* window, float step, Args... args);
 
 private:
+    nf::Random random;
     sf::Texture texture;
     sf::RectangleShape rect;
 
