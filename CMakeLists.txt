@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 project(nuclear_fusion)
 
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(TBB REQUIRED)
 find_package(SFML 2.5.1 COMPONENTS graphics audio REQUIRED)
 
 link_directories(${PROJECT_SOURCE_DIR})
@@ -11,7 +14,7 @@ add_library(brush_lib SHARED src/brush.cpp)
 
 
 add_executable(main main.cpp src/window.cpp src/brush.cpp)
-target_link_libraries(main window_lib brush_lib nf_lib sfml-graphics)
+target_link_libraries(main window_lib brush_lib nf_lib sfml-graphics TBB::tbb)
 
 find_package(pybind11 REQUIRED)
 pybind11_add_module(nuclear_fusion bindings.cpp)

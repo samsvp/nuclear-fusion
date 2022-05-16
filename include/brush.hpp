@@ -24,7 +24,14 @@ public:
     Brush(const char* texture_path, float brush_size_x, float brush_size_y);
     ~Brush();
 
-
+    /**
+     * @brief Set the rect size
+     * 
+     * @param x 
+     * @param y 
+     */
+    void setSize(const nf::Vec2& s);
+    void setSize(int x, int y);
     /**
      * @brief Set the Color object
      * 
@@ -60,7 +67,7 @@ public:
 
 private:
     std::vector<sf::Color> palette;
-    nf::Random random;
+    nf::NormalRandom random;
     sf::Texture texture;
     sf::RectangleShape rect;
 

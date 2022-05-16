@@ -33,6 +33,9 @@ nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size) :
 nf::Brush::~Brush() { }
 
 
+void nf::Brush::setSize(const nf::Vec2& v) { this->rect.setSize({v.x, v.y}); }
+void nf::Brush::setSize(int x, int y) { this->rect.setSize({x, y}); }
+
 void nf::Brush::setColor(sf::Color color) 
 {
     if (this->palette.size() == 0) 
@@ -46,19 +49,10 @@ void nf::Brush::setColor(sf::Color color)
             std::abs((int)c1.b - (int)c2.b);
     };
     
-    int min_dist = 1000000;
-    sf::Color r_color;
-    for (const auto& p: palette)
-    {
-        int dist = calc_dist(p, color);
-        if (dist < min_dist)
-        {
-            min_dist = dist;
-            r_color = p;
-        }
-    }
+    sf::Color r_color = nf::min_with_index(color, palette, calc_dist).second;
     this->rect.setFillColor({r_color.r, r_color.g, r_color.b, color.a});
 }
+
 void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b) 
 { return this->setColor({r, g, b}); }
 void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) 
