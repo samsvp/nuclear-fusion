@@ -20,8 +20,9 @@ class Brush : public sf::Drawable, public sf::Transformable
 {
 public:
 
-    Brush(const char* texture_path, const sf::Vector2f brush_size);
-    Brush(const char* texture_path, float brush_size_x, float brush_size_y);
+    Brush(const char* texture_path, const sf::Vector2f brush_size, bool use_random=false);
+    Brush(const char* texture_path, float brush_size_x, 
+        float brush_size_y, bool use_random=false);
     ~Brush();
 
     /**
@@ -70,6 +71,9 @@ private:
     nf::NormalRandom random;
     sf::Texture texture;
     sf::RectangleShape rect;
+
+    // indicates if the random engine should be used
+    bool use_random;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

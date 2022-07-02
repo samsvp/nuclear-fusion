@@ -12,12 +12,13 @@ using std::this_thread::sleep_for;
 using std::chrono::microseconds;
 
 
-nf::Brush::Brush(const char* texture_path, float brush_size_x, float brush_size_y) :
-        Brush(texture_path, sf::Vector2f{brush_size_x, brush_size_y})
+nf::Brush::Brush(const char* texture_path, float brush_size_x, 
+            float brush_size_y, bool use_random) :
+        Brush(texture_path, sf::Vector2f{brush_size_x, brush_size_y}, use_random)
 {}
 
-nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size) : 
-        random(1.0, 1.0f)
+nf::Brush::Brush(const char* texture_path, const sf::Vector2f brush_size, bool use_random) : 
+        random(1.0, 1.0f), use_random(use_random)
 {
     if (!this->texture.loadFromFile(texture_path))
     {
@@ -80,8 +81,9 @@ void nf::Brush::draw_bezier(nf::Window* window, float step, Args... points)
         nf::Vec2 v = nf::bezier(points..., t);
         
         this->setPosition({v.x, v.y});
+        this->setRotation(std::atan2(v.y, v.x) * 180 / M_PI);
 
-        t += step * random.gen();
+        t += this->use_random ? step * random.gen() : step;
 
         window->should_draw = true;
 
