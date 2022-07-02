@@ -20,6 +20,7 @@ class Brush : public sf::Drawable, public sf::Transformable
 {
 public:
 
+    Brush();
     Brush(const char* texture_path, const sf::Vector2f brush_size, bool use_random=false);
     Brush(const char* texture_path, float brush_size_x, 
         float brush_size_y, bool use_random=false);
@@ -66,11 +67,14 @@ public:
     template<typename... Args>
     void draw_bezier(nf::Window* window, float step, Args... points);
 
+    const sf::Color get_color() const;
+
 private:
     std::vector<sf::Color> palette;
     nf::NormalRandom random;
     sf::Texture texture;
     sf::RectangleShape rect;
+    sf::Color color;
 
     // indicates if the random engine should be used
     bool use_random;

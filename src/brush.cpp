@@ -12,6 +12,9 @@ using std::this_thread::sleep_for;
 using std::chrono::microseconds;
 
 
+nf::Brush::Brush() {}
+
+
 nf::Brush::Brush(const char* texture_path, float brush_size_x, 
             float brush_size_y, bool use_random) :
         Brush(texture_path, sf::Vector2f{brush_size_x, brush_size_y}, use_random)
@@ -42,6 +45,7 @@ void nf::Brush::setColor(sf::Color color)
     if (this->palette.size() == 0) 
     {
         this->rect.setFillColor(color);
+        this->color = color;
         return;
     }
     auto calc_dist = [](sf::Color c1, sf::Color c2){
@@ -51,7 +55,8 @@ void nf::Brush::setColor(sf::Color color)
     };
     
     sf::Color r_color = nf::min_with_index(color, palette, calc_dist).second;
-    this->rect.setFillColor({r_color.r, r_color.g, r_color.b, color.a});
+    this-> color = {r_color.r, r_color.g, r_color.b, color.a};
+    this->rect.setFillColor(this->color);
 }
 
 void nf::Brush::setColor(uint8_t r, uint8_t g, uint8_t b) 
@@ -157,6 +162,10 @@ void nf::Brush::draw_ellipse(nf::Window* window, float x, float y, float rx, flo
         p1.rotate(180, offset, 1), p2.rotate(180, offset, 1), p3.rotate(180, offset, 1));
 
 }
+
+
+const sf::Color nf::Brush::get_color() const
+{ return this->color; }
 
 
 void nf::Brush::draw(sf::RenderTarget& target, sf::RenderStates states) const

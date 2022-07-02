@@ -25,7 +25,7 @@ struct NormalRandom
      * @param low lower random distribution bound (inclusive)
      * @param high higher random distribution bound (inclusive)
      */
-    NormalRandom(float low, float high);
+    NormalRandom(float low=0.0f, float high=1.0f);
 
     /**
      * @brief Generates a random number following a normal distribution
@@ -46,12 +46,12 @@ struct Random
     std::uniform_int_distribution<int> dist;
 
     /**
-     * @brief Construct a new NormalRandom object
+     * @brief Construct a new Random object
      * 
      * @param low lower random distribution bound (inclusive)
      * @param high higher random distribution bound (inclusive)
      */
-    Random(int low, int high);
+    Random(int low=0, int high=100);
 
     /**
      * @brief Generates a random number following an uniform distribution
@@ -194,6 +194,29 @@ const std::pair<int, T> min_with_index(const T& _t, const std::vector<T>& ts, Fu
     return std::make_pair(min_id, t);
 }
 
+
+/**
+ * @brief Create a vector starting from start and ending at end (non inclusive)
+ * 
+ * @tparam Num 
+ * @param start 
+ * @param end 
+ * @param step 
+ * @return const std::vector<Num> 
+ */
+template <typename Num>
+const std::vector<Num> range(Num start, Num end, Num step=1.0)
+{
+    int length = std::ceil((end - start) / static_cast<float>(step));
+    std::vector<Num> v(length);
+
+    for (size_t i = 0; i < length; i++)
+    {
+        v[i] = i * step + start;
+    }
+    
+    return v;
+}
 
 
 template <typename Vec>
