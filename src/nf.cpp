@@ -49,7 +49,27 @@ nf::Vec2 nf::Vec2::rotate(const Vec2& v, float angle, bool is_degree)
 nf::Vec2 nf::Vec2::rotate(const Vec2& v, float angle, const nf::Vec2& center, bool is_degree)
 { return v.rotate(angle, center, is_degree); }
 
+
+const float nf::Vec2::abs() const
+{
+    return std::sqrt(this->x*this->x + this->y*this->y);
+}
+
+
+const float nf::Vec2::distance(const nf::Vec2& other) const
+{
+    return (*this - other).abs();
+}
+
+
+const nf::Vec2 nf::Vec2::normalized() const
+{
+    return (*this) / this->abs();
+}
+
+
 const std::vector<float> nf::Vec2::iter() { return {x, y}; }
+
 
 nf::Vec2 nf::Vec2::operator+(const nf::Vec2& other) const
 { return nf::Vec2(this->x + other.x, this->y + other.y); }
@@ -72,6 +92,25 @@ nf::Vec2 operator*(float lhs, nf::Vec2 rhs) { return {lhs * rhs.x, lhs * rhs.y};
 
 nf::Vec3::Vec3() : x(0), y(0), z(0) { }
 nf::Vec3::Vec3(float x, float y, float z) : x(x), y(y), z(z) { }
+
+
+const float nf::Vec3::abs() const
+{
+    return std::sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
+}
+
+
+const float nf::Vec3::distance(const nf::Vec3& other) const
+{
+    return (*this - other).abs();
+}
+
+
+const nf::Vec3 nf::Vec3::normalized() const
+{
+    return (*this) / this->abs();
+}
+
 
 const std::vector<float> nf::Vec3::iter() { return {x, y, z}; }
 

@@ -92,6 +92,28 @@ struct Vec2
     static Vec2 rotate(const Vec2& v, float angle, bool is_degree=0);
     static Vec2 rotate(const Vec2& v, float angle, const Vec2& center, bool is_degree=0);
 
+    /**
+     * @brief Returns the vector modulo
+     * 
+     * @return float 
+     */
+    const float abs() const;
+
+    /**
+     * @brief Returns the distance between vectors
+     * 
+     * @param other 
+     * @return const float 
+     */
+    const float distance(const Vec2& other) const;
+
+    /**
+     * @brief Returns the normalized vector
+     * 
+     * @return const float 
+     */
+    const nf::Vec2 normalized() const;
+
     const std::vector<float> iter();
     Vec2 operator+(const Vec2& other) const;
     Vec2 operator-(const Vec2& other) const;
@@ -112,6 +134,27 @@ struct Vec3
     float x, y, z;
     Vec3();
     Vec3(float x, float y, float z);
+
+    /**
+     * @brief Returns the vector modulo
+     * 
+     * @return float 
+     */
+    const float abs() const;
+    /**
+     * @brief Returns the distance between vectors
+     * 
+     * @param other 
+     * @return const float 
+     */
+    const float distance(const Vec3& other) const;
+
+        /**
+     * @brief Returns the normalized vector
+     * 
+     * @return const float 
+     */
+    const nf::Vec3 normalized() const;
 
     const std::vector<float> iter();
     Vec3 operator+(const Vec3& other) const;
@@ -159,6 +202,7 @@ const int assign_centroid_id(const Vec& point, std::vector<Vec> centroids)
     return min_with_index(point, centroids, [](Vec v1, Vec v2){ return sqr_dist(v1, v2); }).first;
 }
 
+//https://reasonabledeviations.com/2019/10/02/k-means-in-cpp/
 template <typename Vec>
 const std::vector<Vec> KMeans(const std::vector<Vec>& points, int k)
 {
